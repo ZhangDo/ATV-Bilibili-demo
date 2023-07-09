@@ -7,8 +7,8 @@
 
 import AVFoundation
 import CocoaLumberjackSwift
+import os.log
 import UIKit
-
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
@@ -39,6 +39,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .moviePlayback)
+    }
+
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
+        let components = URLComponents(url: url, resolvingAgainstBaseURL: true)
+        let aid = Int((components?.queryItems?.first?.value)!)
+        let detailVC = VideoDetailViewController.create(aid: aid!, cid: 0)
+        detailVC.isPlay = components?.queryItems?.last?.value == "1"
+        detailVC.present(from: (window?.rootViewController)!)
+
+        return true
     }
 
     func showLogin() {

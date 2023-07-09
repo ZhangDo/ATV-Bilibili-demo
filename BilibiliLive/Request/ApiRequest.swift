@@ -281,7 +281,19 @@ enum ApiRequest {
     static func getFeeds(lastIdx: Int = 0) async throws -> [FeedResp.Items] {
         let idx = "\(lastIdx)"
         let resp: FeedResp = try await request(EndPoint.feed, parameters: ["idx": idx, "flush": "0", "column": "4", "device": "pad", "pull": idx == "0" ? "1" : "0"])
-        return resp.items.filter({ $0.goto == "av" })
+        let items: [FeedResp.Items] = resp.items.filter({ $0.goto == "av" })
+        if let encode = try? JSONEncoder().encode(items) {
+            let collectURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.Bilibili.a")
+            let fileURL: URL
+            if #available(tvOS 16.0, *) {
+                fileURL = (collectURL?.appending(component: "FeedResp"))!
+            } else {
+                // Fallback on earlier versions
+                fileURL = (collectURL?.appendingPathComponent("FeedResp", conformingTo: .data))!
+            }
+            try encode.write(to: fileURL)
+        }
+        return items
     }
 
     static func requestDislike(aid: Int, dislike: Bool) {

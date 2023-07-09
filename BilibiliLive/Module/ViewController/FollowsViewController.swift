@@ -11,7 +11,19 @@ import UIKit
 
 class FollowsViewController: StandardVideoCollectionViewController<FeedData> {
     override func request(page: Int) async throws -> [FeedData] {
-        return try await WebRequest.requestFollowsFeed(page: page)
+        let items = try await WebRequest.requestFollowsFeed(page: page)
+//        if let encode = try? JSONEncoder().encode(items) {
+//            let collectURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.Bilibili.a")
+//            let fileURL: URL
+//            if #available(tvOS 16.0, *) {
+//                fileURL = (collectURL?.appending(component: "FeedResp"))!
+//            } else {
+//                // Fallback on earlier versions
+//                fileURL = (collectURL?.appendingPathComponent("FeedResp", conformingTo: .data))!
+//            }
+//            try encode.write(to: fileURL)
+//        }
+        return items
     }
 
     override func goDetail(with feed: FeedData) {

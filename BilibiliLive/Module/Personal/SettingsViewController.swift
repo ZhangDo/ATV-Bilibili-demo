@@ -101,6 +101,22 @@ class SettingsViewController: UIViewController {
         }
         cellModels.append(hotWithoutCookie)
 
+        let topShelpStyle = CellModel(title: "Top Shelf", desp: Settings.topShelf.desp) { [weak self] in
+            let alert = UIAlertController(title: "Top Shelf", message: "刷新需要手动去对应的位置", preferredStyle: .actionSheet)
+            for topShelf in TopShelfEnum.allCases {
+                let action = UIAlertAction(title: topShelf.desp, style: .default) { _ in
+                    Settings.topShelf = topShelf
+                    let defaults = UserDefaults(suiteName: "group.Bilibili.a")!
+                    defaults.set(topShelf.desp, forKey: "topShelf")
+                    self?.setupData()
+                }
+                alert.addAction(action)
+            }
+            alert.addAction(cancelAction)
+            self?.present(alert, animated: true)
+        }
+        cellModels.append(topShelpStyle)
+
         let continuePlay = CellModel(title: "从上次退出的位置继续播放", desp: Settings.continuePlay ? "开" : "关") {
             [weak self] in
             Settings.continuePlay.toggle()

@@ -8,6 +8,7 @@
 import Alamofire
 import Foundation
 import SwiftyJSON
+import UniformTypeIdentifiers
 
 enum RequestError: Error {
     case networkFail
@@ -249,6 +250,20 @@ extension WebRequest {
             let medias: [FavData]?
         }
         let res: Resp = try await request(method: .get, url: EndPoint.fav, parameters: ["media_id": mid, "ps": "20", "pn": page, "platform": "web"])
+        if let encode = try? JSONEncoder().encode(res.medias) {
+            let collectURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.Bilibili.a")
+            let fileURL: URL
+            if #available(tvOS 16.0, *) {
+                fileURL = (collectURL?.appending(component: "Collect"))!
+            } else {
+                // Fallback on earlier versions
+                fileURL = (collectURL?.appendingPathComponent("Collect", conformingTo: .data))!
+            }
+            try encode.write(to: fileURL)
+
+//            let defaults = UserDefaults(suiteName: "group.Bilibili.a")!
+//            defaults.set(encode, forKey: "Collect")
+        }
         return res.medias ?? []
     }
 

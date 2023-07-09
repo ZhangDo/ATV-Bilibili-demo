@@ -83,6 +83,9 @@ enum Settings {
 
     @UserDefault("Settings.arealimit.customServer", defaultValue: "")
     static var areaLimitCustomServer: String
+
+    @UserDefaultCodable("Settings.topShelf", defaultValue: .feed)
+    static var topShelf: TopShelfEnum
 }
 
 struct MediaQuality {
@@ -159,6 +162,92 @@ enum MediaQualityEnum: Codable, CaseIterable {
     case quality_1080p
     case quality_2160p
     case quality_hdr_dolby
+}
+
+enum TopShelfEnum: Codable, CaseIterable {
+    case feed
+    case hot
+    case ranking
+    case favorite
+}
+
+enum RankingEnum: Codable, CaseIterable {
+    case animation
+    case music
+    case dance
+    case game
+    case knowledge
+    case technology
+    case sports
+    case car
+    case life
+    case food
+    case animal
+    case dramatic
+    case fashion
+    case entertainment
+    case film
+    case documentary
+    case movie
+    case tvSeries
+}
+
+extension RankingEnum {
+    var desp: String {
+        switch self {
+        case .animation:
+            return "动画"
+        case .music:
+            return "音乐"
+        case .dance:
+            return "舞蹈"
+        case .game:
+            return "游戏"
+        case .knowledge:
+            return "知识"
+        case .technology:
+            return "科技"
+        case .sports:
+            return "运动"
+        case .car:
+            return "汽车"
+        case .life:
+            return "生活"
+        case .food:
+            return "美食"
+        case .animal:
+            return "动物圈"
+        case .dramatic:
+            return "鬼畜"
+        case .fashion:
+            return "时尚"
+        case .entertainment:
+            return "娱乐"
+        case .film:
+            return "影视"
+        case .documentary:
+            return "纪录片"
+        case .movie:
+            return "电影"
+        case .tvSeries:
+            return "电视剧"
+        }
+    }
+}
+
+extension TopShelfEnum {
+    var desp: String {
+        switch self {
+        case .feed:
+            return "推荐"
+        case .hot:
+            return "热门"
+        case .ranking:
+            return "排行榜"
+        case .favorite:
+            return "收藏"
+        }
+    }
 }
 
 extension MediaQualityEnum {

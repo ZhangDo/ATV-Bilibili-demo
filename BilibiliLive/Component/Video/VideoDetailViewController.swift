@@ -17,6 +17,7 @@ import TVUIKit
 
 class VideoDetailViewController: UIViewController {
     private var loadingView = UIActivityIndicatorView()
+    var isPlay: Bool = false
     @IBOutlet var backgroundImageView: UIImageView!
     @IBOutlet var effectContainerView: UIVisualEffectView!
 
@@ -193,6 +194,10 @@ class VideoDetailViewController: UIViewController {
             }
             let data = try await WebRequest.requestDetailVideo(aid: aid)
             self.data = data
+
+            if isPlay {
+                actionPlay(UIButton())
+            }
 
             if let redirect = data.View.redirect_url?.lastPathComponent, redirect.starts(with: "ep"), let id = Int(redirect.dropFirst(2)), !isBangumi {
                 isBangumi = true

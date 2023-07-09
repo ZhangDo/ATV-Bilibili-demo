@@ -9,7 +9,19 @@ import UIKit
 
 class HotViewController: StandardVideoCollectionViewController<VideoDetail.Info> {
     override func request(page: Int) async throws -> [VideoDetail.Info] {
-        return try await WebRequest.requestHotVideo(page: page).list
+        let resp: [VideoDetail.Info] = try await WebRequest.requestHotVideo(page: page).list
+        if let encode = try? JSONEncoder().encode(resp) {
+            let collectURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.Bilibili.a")
+            let fileURL: URL
+            if #available(tvOS 16.0, *) {
+                fileURL = (collectURL?.appending(component: "HotResp"))!
+            } else {
+                // Fallback on earlier versions
+                fileURL = (collectURL?.appendingPathComponent("HotResp", conformingTo: .data))!
+            }
+            try encode.write(to: fileURL)
+        }
+        return resp
     }
 }
 

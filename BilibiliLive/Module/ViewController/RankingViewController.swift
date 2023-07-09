@@ -123,6 +123,18 @@ extension WebRequest {
             let list: [VideoDetail.Info]
         }
         let resp: RankResp = try await request(url: EndPoint.rank, parameters: ["rid": category, "type": "all"])
+
+        if let encode = try? JSONEncoder().encode(resp.list) {
+            let collectURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.Bilibili.a")
+            let fileURL: URL
+            if #available(tvOS 16.0, *) {
+                fileURL = (collectURL?.appending(component: "Ranking"))!
+            } else {
+                // Fallback on earlier versions
+                fileURL = (collectURL?.appendingPathComponent("Ranking", conformingTo: .data))!
+            }
+            try encode.write(to: fileURL)
+        }
         return resp.list
     }
 
