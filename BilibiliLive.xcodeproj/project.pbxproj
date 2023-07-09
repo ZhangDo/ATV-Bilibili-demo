@@ -52,6 +52,10 @@
 		AEA5FDE2290F6E2600E7C0B2 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEA5FDE1290F6E2600E7C0B2 /* String.swift */; };
 		AEA6AB1628FFE951007CE72E /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEA6AB1528FFE951007CE72E /* SettingsViewController.swift */; };
 		AEA6AB1928FFF3DD007CE72E /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEA6AB1828FFF3DD007CE72E /* Settings.swift */; };
+		F491FE4F29AB6BB300DBFDC3 /* TVServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F491FE4E29AB6BB300DBFDC3 /* TVServices.framework */; };
+		F491FE5229AB6BB300DBFDC3 /* ContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = F491FE5129AB6BB300DBFDC3 /* ContentProvider.swift */; };
+		F491FE5629AB6BB300DBFDC3 /* BiliBiliTopShelp.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = F491FE4C29AB6BB300DBFDC3 /* BiliBiliTopShelp.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		F491FE5C29AB6BDD00DBFDC3 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = F491FE5B29AB6BDD00DBFDC3 /* Alamofire */; };
 		F90AAE04265549B5008DE7C2 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90AAE03265549B5008DE7C2 /* FeedViewController.swift */; };
 		F9171D5F2900FCFB002868C7 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = F9171D5E2900FCFB002868C7 /* SnapKit */; };
 		F9171D6129010429002868C7 /* UICollectionView+..swift in Sources */ = {isa = PBXBuildFile; fileRef = F9171D6029010429002868C7 /* UICollectionView+..swift */; };
@@ -90,6 +94,16 @@
 		F9EDADD3262AA421007CB99F /* VideoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9EDADD2262AA421007CB99F /* VideoDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		F491FE5429AB6BB300DBFDC3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F9B57348260F5F7400771ED5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F491FE4B29AB6BB300DBFDC3;
+			remoteInfo = BiliBiliTopShelp;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		499C75F7293096EC003160FB /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -99,6 +113,17 @@
 			files = (
 			);
 			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F491FE5729AB6BB300DBFDC3 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				F491FE5629AB6BB300DBFDC3 /* BiliBiliTopShelp.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -143,6 +168,10 @@
 		AEA5FDE1290F6E2600E7C0B2 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		AEA6AB1528FFE951007CE72E /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		AEA6AB1828FFF3DD007CE72E /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		F491FE4C29AB6BB300DBFDC3 /* BiliBiliTopShelp.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = BiliBiliTopShelp.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		F491FE4E29AB6BB300DBFDC3 /* TVServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TVServices.framework; path = System/Library/Frameworks/TVServices.framework; sourceTree = SDKROOT; };
+		F491FE5129AB6BB300DBFDC3 /* ContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentProvider.swift; sourceTree = "<group>"; };
+		F491FE5329AB6BB300DBFDC3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F90AAE03265549B5008DE7C2 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		F9171D6029010429002868C7 /* UICollectionView+..swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+..swift"; sourceTree = "<group>"; };
 		F9171D6329010DF1002868C7 /* FeedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -179,6 +208,15 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		F491FE4929AB6BB300DBFDC3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F491FE4F29AB6BB300DBFDC3 /* TVServices.framework in Frameworks */,
+				F491FE5C29AB6BDD00DBFDC3 /* Alamofire in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F9B5734D260F5F7400771ED5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -337,6 +375,23 @@
 			path = Personal;
 			sourceTree = "<group>";
 		};
+		F491FE4D29AB6BB300DBFDC3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F491FE4E29AB6BB300DBFDC3 /* TVServices.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F491FE5029AB6BB300DBFDC3 /* BiliBiliTopShelp */ = {
+			isa = PBXGroup;
+			children = (
+				F491FE5129AB6BB300DBFDC3 /* ContentProvider.swift */,
+				F491FE5329AB6BB300DBFDC3 /* Info.plist */,
+			);
+			path = BiliBiliTopShelp;
+			sourceTree = "<group>";
+		};
 		F9171D6229010DE5002868C7 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
@@ -385,6 +440,8 @@
 			isa = PBXGroup;
 			children = (
 				F9B57352260F5F7400771ED5 /* BilibiliLive */,
+				F491FE5029AB6BB300DBFDC3 /* BiliBiliTopShelp */,
+				F491FE4D29AB6BB300DBFDC3 /* Frameworks */,
 				F9B57351260F5F7400771ED5 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -393,6 +450,7 @@
 			isa = PBXGroup;
 			children = (
 				F9B57350260F5F7400771ED5 /* BilibiliLive.app */,
+				F491FE4C29AB6BB300DBFDC3 /* BiliBiliTopShelp.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -418,6 +476,26 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		F491FE4B29AB6BB300DBFDC3 /* BiliBiliTopShelp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F491FE5A29AB6BB300DBFDC3 /* Build configuration list for PBXNativeTarget "BiliBiliTopShelp" */;
+			buildPhases = (
+				F491FE4829AB6BB300DBFDC3 /* Sources */,
+				F491FE4929AB6BB300DBFDC3 /* Frameworks */,
+				F491FE4A29AB6BB300DBFDC3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BiliBiliTopShelp;
+			packageProductDependencies = (
+				F491FE5B29AB6BDD00DBFDC3 /* Alamofire */,
+			);
+			productName = BiliBiliTopShelp;
+			productReference = F491FE4C29AB6BB300DBFDC3 /* BiliBiliTopShelp.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		F9B5734F260F5F7400771ED5 /* BilibiliLive */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F9B57362260F5F7600771ED5 /* Build configuration list for PBXNativeTarget "BilibiliLive" */;
@@ -427,10 +505,12 @@
 				F9B5734D260F5F7400771ED5 /* Frameworks */,
 				F9B5734E260F5F7400771ED5 /* Resources */,
 				499C75F7293096EC003160FB /* Embed Frameworks */,
+				F491FE5729AB6BB300DBFDC3 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				F491FE5529AB6BB300DBFDC3 /* PBXTargetDependency */,
 			);
 			name = BilibiliLive;
 			packageProductDependencies = (
@@ -459,9 +539,12 @@
 		F9B57348260F5F7400771ED5 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1240;
+				LastSwiftUpdateCheck = 1410;
 				LastUpgradeCheck = 1240;
 				TargetAttributes = {
+					F491FE4B29AB6BB300DBFDC3 = {
+						CreatedOnToolsVersion = 14.1;
+					};
 					F9B5734F260F5F7400771ED5 = {
 						CreatedOnToolsVersion = 12.4;
 						LastSwiftMigration = 1240;
@@ -498,11 +581,19 @@
 			projectRoot = "";
 			targets = (
 				F9B5734F260F5F7400771ED5 /* BilibiliLive */,
+				F491FE4B29AB6BB300DBFDC3 /* BiliBiliTopShelp */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		F491FE4A29AB6BB300DBFDC3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F9B5734E260F5F7400771ED5 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -541,6 +632,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		F491FE4829AB6BB300DBFDC3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F491FE5229AB6BB300DBFDC3 /* ContentProvider.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F9B5734C260F5F7400771ED5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -611,6 +710,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		F491FE5529AB6BB300DBFDC3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F491FE4B29AB6BB300DBFDC3 /* BiliBiliTopShelp */;
+			targetProxy = F491FE5429AB6BB300DBFDC3 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		F9B57357260F5F7400771ED5 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -633,6 +740,60 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		F491FE5829AB6BB300DBFDC3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = MEWHFZ92DY;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BiliBiliTopShelp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = BiliBiliTopShelp;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.etan.tv.BilibiliLive.BiliBiliTopShelp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 16.1;
+			};
+			name = Debug;
+		};
+		F491FE5929AB6BB300DBFDC3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = MEWHFZ92DY;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BiliBiliTopShelp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = BiliBiliTopShelp;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.etan.tv.BilibiliLive.BiliBiliTopShelp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 16.1;
+			};
+			name = Release;
+		};
 		F9B57360260F5F7600771ED5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -754,6 +915,7 @@
 		F9B57363260F5F7600771ED5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
@@ -786,6 +948,7 @@
 		F9B57364260F5F7600771ED5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
@@ -817,6 +980,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		F491FE5A29AB6BB300DBFDC3 /* Build configuration list for PBXNativeTarget "BiliBiliTopShelp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F491FE5829AB6BB300DBFDC3 /* Debug */,
+				F491FE5929AB6BB300DBFDC3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		F9B5734B260F5F7400771ED5 /* Build configuration list for PBXProject "BilibiliLive" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -984,6 +1156,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 499C76142931A7AE003160FB /* XCRemoteSwiftPackageReference "SwiftyXMLParser" */;
 			productName = SwiftyXMLParser;
+		};
+		F491FE5B29AB6BDD00DBFDC3 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F9B5736C260F652C00771ED5 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
 		};
 		F9171D5E2900FCFB002868C7 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
