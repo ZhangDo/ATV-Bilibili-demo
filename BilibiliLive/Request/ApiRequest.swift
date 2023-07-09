@@ -28,6 +28,7 @@ enum ApiRequest {
         static let refresh = "https://passport.bilibili.com/api/v2/oauth2/refresh_token"
         static let ssoCookie = "https://passport.bilibili.com/api/login/sso"
         static let feed = "https://app.bilibili.com/x/v2/feed/index"
+        static let season = "https://api.bilibili.com/pgc/view/v2/app/season"
     }
 
     enum LoginState {
@@ -55,8 +56,9 @@ enum ApiRequest {
     static func sign(for param: [String: Any]) -> [String: Any] {
         var newParam = param
         newParam["appkey"] = appkey
-        newParam["ts"] = "\(Date().timeIntervalSince1970)"
+        newParam["ts"] = "\(Int(Date().timeIntervalSince1970))"
         newParam["local_id"] = "0"
+        newParam["mobi_app"] = "android"
         var rawParam = newParam
             .sorted(by: { $0.0 < $1.0 })
             .map({ "\($0.key)=\($0.value)" })
@@ -114,7 +116,7 @@ enum ApiRequest {
 
     static func request<T: Decodable>(_ url: URLConvertible,
                                       method: HTTPMethod = .get,
-                                      parameters: [String: String] = [:],
+                                      parameters: Parameters = [:],
                                       auth: Bool = true,
                                       encoding: ParameterEncoding = URLEncoding.default,
                                       decoder: JSONDecoder = JSONDecoder(),
@@ -139,7 +141,7 @@ enum ApiRequest {
 
     static func request<T: Decodable>(_ url: URLConvertible,
                                       method: HTTPMethod = .get,
-                                      parameters: [String: String] = [:],
+                                      parameters: Parameters = [:],
                                       auth: Bool = true,
                                       encoding: ParameterEncoding = URLEncoding.default,
                                       decoder: JSONDecoder = JSONDecoder()) async throws -> T
@@ -284,5 +286,70 @@ enum ApiRequest {
 
     static func requestDislike(aid: Int, dislike: Bool) {
         requestJSON("http://app.biliapi.net/x/v2/view/dislike", method: .post, parameters: ["aid": aid, "dislike": dislike ? 0 : 1])
+    }
+
+    struct BangumiInfo: Codable, Hashable {
+        struct Stat: Codable, Hashable {
+            let coins, danmakus, favorite, favorites: Int
+            let likes, reply, share, views: Int
+        }
+
+        struct Rights: Codable, Hashable {
+            let area_limit: Int
+            let ban_area_show: Int
+        }
+
+        struct UserStatus: Codable, Hashable {
+            let follow: Int
+            let follow_status: Int
+        }
+
+        let title: String
+        let cover: String
+        let evaluate: String?
+        let season_id: Int
+        let season_title: String
+        let user_status: UserStatus
+        let stat: Stat
+        let rights: Rights
+    }
+
+    static func requestBangumiInfo(epid: Int) async throws -> BangumiInfo {
+        let info: BangumiInfo = try await request(EndPoint.season, parameters: ["ep_id": "\(epid)"])
+        return info
+    }
+
+    static func requestBangumiInfo(seasonID: Int) async throws -> BangumiInfo {
+        let info: BangumiInfo = try await request(EndPoint.season, parameters: ["season_id": "\(seasonID)"])
+        return info
+    }
+
+    struct UpSpaceListData: Codable, Hashable, DisplayData, PlayableData {
+        var pic: URL? { return cover }
+
+        var aid: Int { return Int(param) ?? 0 }
+
+        let title: String
+        let author: String
+        let param: String
+        let cover: URL?
+        var ownerName: String {
+            return author
+        }
+
+        var cid: Int { return 0 }
+    }
+
+    static func requestUpSpaceVideo(mid: Int, lastAid: Int?, pageSize: Int = 20) async throws -> [UpSpaceListData] {
+        struct Resp: Codable {
+            let item: [UpSpaceListData]
+        }
+
+        var param: Parameters = ["vmid": mid, "ps": pageSize, "actionKey": "appkey", "disable_rcmd": 0, "fnval": 976, "fnver": 0, "force_host": 0, "fourk": 1, "order": "pubdate", "player_net": 1, "qn": 120]
+        if let lastAid {
+            param["aid"] = lastAid
+        }
+        let resp: Resp = try await request("https://app.bilibili.com/x/v2/space/archive/cursor", parameters: param)
+        return resp.item
     }
 }

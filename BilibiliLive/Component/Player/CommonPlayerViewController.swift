@@ -129,7 +129,7 @@ class CommonPlayerViewController: AVPlayerViewController {
         playerItem?.externalMetadata = meta
 
         if let pic = pic {
-            let resource = ImageResource(downloadURL: pic)
+            let resource = Kingfisher.ImageResource(downloadURL: pic)
             KingfisherManager.shared.retrieveImage(with: resource) {
                 [weak self] result in
                 guard let self = self,
@@ -205,7 +205,11 @@ class CommonPlayerViewController: AVPlayerViewController {
             let speedActions = playSpeedArray.map { playSpeed in
                 UIAction(title: playSpeed.name, state: player?.rate ?? 1 == playSpeed.value ? .on : .off) { [weak self] action in
                     self?.player?.currentItem?.audioTimePitchAlgorithm = .timeDomain
-                    self?.player?.rate = playSpeed.value
+                    if #available(tvOS 16.0, *) {
+                        self?.selectSpeed(AVPlaybackSpeed(rate: playSpeed.value, localizedName: playSpeed.name))
+                    } else {
+                        self?.player?.rate = playSpeed.value
+                    }
                     self?.danMuView.playingSpeed = playSpeed.value
                 }
             }

@@ -15,6 +15,8 @@ protocol PlayableData: DisplayData {
 class StandardVideoCollectionViewController<T: PlayableData>: UIViewController, BLTabBarContentVCProtocol {
     let collectionVC = FeedCollectionViewController()
     var lastReloadDate = Date()
+    var reloadInterval: TimeInterval = 60 * 60
+    var reloading = false
     private var page = 0
     override var preferredFocusEnvironments: [UIFocusEnvironment] {
         return [collectionVC.collectionView]
@@ -28,8 +30,8 @@ class StandardVideoCollectionViewController<T: PlayableData>: UIViewController, 
         NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         autoReloadIfNeed()
     }
 
@@ -65,13 +67,18 @@ class StandardVideoCollectionViewController<T: PlayableData>: UIViewController, 
     }
 
     func reallyReloadData() async {
+        if reloading { return }
+        reloading = true
+        defer {
+            reloading = false
+        }
         lastReloadDate = Date()
         page = 1
         do {
             let res = try await request(page: 1)
             collectionVC.displayDatas = res
         } catch let err {
-            let alert = UIAlertController(title: "Error", message: err.localizedDescription, preferredStyle: .alert)
+            let alert = UIAlertController(title: "Error", message: "\(err)", preferredStyle: .alert)
             alert.addAction(.init(title: "Ok", style: .cancel))
             present(alert, animated: true)
         }
@@ -83,16 +90,17 @@ class StandardVideoCollectionViewController<T: PlayableData>: UIViewController, 
         guard supportPullToLoad() else { return }
         Task {
             do {
-                let res = (try! await request(page: page + 1))
-                collectionVC.appendData(displayData: res)
-                page = page + 1
+                if let res = (try? await request(page: page + 1)) {
+                    collectionVC.appendData(displayData: res)
+                    page = page + 1
+                }
             }
         }
     }
 
     func autoReloadIfNeed() {
         guard isViewLoaded, view.window != nil else { return }
-        guard Date().timeIntervalSince(lastReloadDate) > 3600 else { return }
+        guard Date().timeIntervalSince(lastReloadDate) > reloadInterval else { return }
         Task {
             await reallyReloadData()
         }

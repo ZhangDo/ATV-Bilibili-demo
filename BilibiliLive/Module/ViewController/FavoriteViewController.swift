@@ -14,6 +14,7 @@ class FavoriteViewController: UIViewController {
     var dataSource: UICollectionViewDiffableDataSource<FavListData, FavData>!
     var currentSnapshot: NSDiffableDataSourceSnapshot<FavListData, FavData>!
     static let titleElementKind = "titleElementKind"
+    var reloading = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +37,11 @@ class FavoriteViewController: UIViewController {
 
 extension FavoriteViewController: BLTabBarContentVCProtocol {
     func reloadData() {
+        if reloading { return }
+        reloading = true
+        defer {
+            reloading = false
+        }
         Task {
             guard let favList = try? await WebRequest.requestFavVideosList() else {
                 return
@@ -44,7 +50,7 @@ extension FavoriteViewController: BLTabBarContentVCProtocol {
             currentSnapshot.appendSections(favList)
             favList.forEach { list in
                 Task {
-                    if let content = try? await WebRequest.requestFavVideos(mid: String(list.id)) {
+                    if let content = try? await WebRequest.requestFavVideos(mid: String(list.id), page: 1) {
                         applyData(for: list, content: content)
                     }
                 }
@@ -121,8 +127,12 @@ extension FavoriteViewController {
 extension FavoriteViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let d = dataSource.itemIdentifier(for: indexPath) else { return }
-        let vc = VideoDetailViewController.create(aid: d.id, cid: 0)
-        vc.present(from: UIViewController.topMostViewController())
+        if let seasonId = d.ogv?.season_id {
+            VideoDetailViewController.create(seasonId: seasonId).present(from: self)
+        } else {
+            let vc = VideoDetailViewController.create(aid: d.id, cid: 0)
+            vc.present(from: UIViewController.topMostViewController())
+        }
     }
 
     func indexPathForPreferredFocusedView(in collectionView: UICollectionView) -> IndexPath? {
@@ -130,5 +140,24 @@ extension FavoriteViewController: UICollectionViewDelegate {
             return IndexPath(item: 0, section: 0)
         }
         return nil
+    }
+
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if collectionView.numberOfItems(inSection: indexPath.section) - 1 == indexPath.item {
+            if let ident = dataSource.sectionIdentifier(for: indexPath.section), !ident.loading, !ident.end {
+                Task {
+                    ident.currentPage += 1
+                    ident.loading = true
+                    defer { ident.loading = false }
+                    if let content = try? await WebRequest.requestFavVideos(mid: String(ident.id), page: ident.currentPage) {
+                        if content.count < 20 {
+                            ident.end = true
+                        }
+                        currentSnapshot.appendItems(content, toSection: ident)
+                        await dataSource.apply(currentSnapshot)
+                    }
+                }
+            }
+        }
     }
 }
