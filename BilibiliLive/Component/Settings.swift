@@ -30,11 +30,14 @@ enum Settings {
     @UserDefaultCodable("Settings.danmuArea", defaultValue: .style_75)
     static var danmuArea: DanmuArea
 
+    @UserDefaultCodable("Settings.danmuSize", defaultValue: .size_36)
+    static var danmuSize: DanmuSize
+
     @UserDefault("Settings.losslessAudio", defaultValue: false)
     static var losslessAudio: Bool
 
-    @UserDefault("Settings.preferHevc", defaultValue: false)
-    static var preferHevc: Bool
+    @UserDefault("Settings.preferAvc", defaultValue: false)
+    static var preferAvc: Bool
 
     @UserDefault("Settings.defaultDanmuStatus", defaultValue: true)
     static var defaultDanmuStatus: Bool
@@ -57,6 +60,9 @@ enum Settings {
     @UserDefault("DLNA.uuid", defaultValue: "")
     static var uuid: String
 
+    @UserDefault("DLNA.enable", defaultValue: true)
+    static var enableDLNA: Bool
+
     @UserDefault("Settings.continouslyPlay", defaultValue: true)
     static var continouslyPlay: Bool
 
@@ -68,6 +74,15 @@ enum Settings {
 
     @UserDefault("Settings.showRelatedVideoInCurrentVC", defaultValue: true)
     static var showRelatedVideoInCurrentVC: Bool
+
+    @UserDefault("Settings.requestHotWithoutCookie", defaultValue: false)
+    static var requestHotWithoutCookie: Bool
+
+    @UserDefault("Settings.arealimit.unlock", defaultValue: false)
+    static var areaLimitUnlock: Bool
+
+    @UserDefault("Settings.arealimit.customServer", defaultValue: "")
+    static var areaLimitCustomServer: String
 }
 
 struct MediaQuality {
@@ -80,6 +95,36 @@ enum DanmuArea: Codable, CaseIterable {
     case style_50
     case style_25
     case style_0
+}
+
+enum DanmuSize: String, Codable, CaseIterable {
+    case size_25
+    case size_31
+    case size_36
+    case size_42
+    case size_48
+    case size_57
+
+    var title: String {
+        return "\(Int(size)) pt"
+    }
+
+    var size: CGFloat {
+        switch self {
+        case .size_25:
+            return 25
+        case .size_31:
+            return 31
+        case .size_36:
+            return 36
+        case .size_42:
+            return 42
+        case .size_48:
+            return 48
+        case .size_57:
+            return 57
+        }
+    }
 }
 
 extension DanmuArea {
